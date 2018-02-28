@@ -1,0 +1,20 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+
+  <h3>Welcome to test task from ASD_Technology company!</h3>
+
+{% if current_user and current_user.is_authenticated %}
+  <p class="navbar-text">Hello, {{ current_user.username }}! <a class="navbar-link" href="{{ url_for('user.members') }}">Personal area</a></p>
+  {% else %}
+  <p>You should sign in or sign up.</p>
+{% endif %}
+
+
+</div><!-- /.jumbotron -->
+
+
+{% endblock %}
+

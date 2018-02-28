@@ -1,0 +1,58 @@
+
+{% extends "layout.html" %}
+{% import "_macros.html" as macros %}
+
+{% block content %}
+    <h3>Welcome {{ current_user.username }}. You have {{ pagination.total }}/{{ max_files }} files.
+    {% if pagination.total >= max_files %}
+    You can't add new file.
+    {% endif %}
+
+    </h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="5%">&nbsp;</th>
+                <th width="90%">Filename</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td colspan="2"><i>Add new file</i></td>
+            <td>
+            <form id="addFileForm" method="POST" enctype="multipart/form-data">
+                <table border="0">
+                    <tr>
+                        <td>{{ form.hidden_tag() }} {{ form.file }}</td>
+                        <td><input type="submit" value="Add File" {% if pagination.total >= max_files %}disabled{% endif %}></td>
+
+                    </tr>
+                </table>
+            </form>
+            </td>
+        </tr>
+
+        {% for ufile in ufiles %}
+        <tr>
+            <td align="center">{{ loop.index0 + 1 }}</td>
+            <td><a href="../download/{{ ufile.link }}">{{ ufile.filename}}</a></td>
+            <td align="right"><button onclick="window.location.href='/users/remove/{{ ufile.id }}'">Remove</button></td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td colspan="3" align="center">
+                <div class="pagination">
+                    {{ macros.pagination_widget(pagination, '.members') }}
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
